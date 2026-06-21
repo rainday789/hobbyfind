@@ -1,106 +1,81 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
+import { categoryThemes } from '@/lib/category-theme';
+import { getHeroCopy } from '@/lib/recommendation-copy';
 
 export function HeroSection() {
   const { data: session, status } = useSession();
-  
+  const copy = getHeroCopy(!!session, session?.user?.name);
+
   return (
-    <section className="bg-gradient-to-br from-neutral-light to-white py-20 md:py-32">
-      <div className="container mx-auto px-4 text-center">
-        <div className="max-w-4xl mx-auto">
-          <motion.div 
-            className="mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 bg-brand-red/10 text-brand-red rounded-full px-4 py-2 mb-6">
-              <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">새로운 취미를 발견하세요</span>
-            </div>
-          </motion.div>
+    <section className="relative overflow-hidden bg-white border-b border-line">
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-purple-light via-white to-brand-purple-light/50" />
+      <div className="absolute top-0 right-0 w-72 h-72 bg-brand-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-accent/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4" />
 
-          <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-neutral-dark"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            당신만의
-            <br />
-            <span className="text-brand-red">특별한 취미</span>를 찾아보세요
-          </motion.h1>
-
-          <motion.p 
-            className="text-lg md:text-xl mb-8 text-gray-600 max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            운동형, 지능형, 예술형 취미 중에서 당신에게 맞는 취미를 발견하고,
-            <br className="hidden md:block" />
-            로그인하면 관심 있는 취미를 북마크하여 관리할 수 있습니다.
-          </motion.p>
-
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
+      <div className="container mx-auto px-4 py-10 md:py-14 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl"
+        >
+          <span className="inline-block text-xs font-bold text-brand-primary bg-brand-purple-light px-3 py-1 rounded-full mb-4">
+            {copy.badge}
+          </span>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink leading-tight mb-4 whitespace-pre-line">
+            {copy.headline}
+          </h1>
+          <p className="text-ink-muted text-base md:text-lg max-w-2xl mb-6 leading-relaxed">
+            {copy.description}
+          </p>
+          <div className="flex flex-wrap gap-3">
             <Button
               asChild
               size="lg"
-              className="bg-brand-red hover:bg-brand-red/90 text-white px-8 py-3 text-lg rounded-full"
+              className="rounded-full bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold px-8 shadow-lg shadow-brand-primary/25"
             >
-              <Link href="#hobbies" className="flex items-center gap-2">
-                취미 탐색하기
-                <ArrowRight className="w-5 h-5" />
+              <Link href="#recommendations" className="flex items-center gap-2">
+                추천 보러가기
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>
-            
-            {status === 'loading' ? (
-              <div className="w-32 h-12 bg-gray-200 rounded-full animate-pulse"></div>
-            ) : !session ? (
+            {status !== 'loading' && !session && (
               <Button
                 asChild
-                variant="outline"
                 size="lg"
-                className="border-brand-red text-brand-red hover:bg-brand-red hover:text-white px-8 py-3 text-lg rounded-full"
+                variant="outline"
+                className="rounded-full border-brand-primary/30 text-brand-primary hover:bg-brand-purple-light"
               >
-                <Link href="/signup">
-                  회원가입
-                </Link>
+                <Link href="/signup">회원가입하고 찜하기</Link>
               </Button>
-            ) : null}
-          </motion.div>
+            )}
+          </div>
+        </motion.div>
 
-          {/* Stats */}
-          <motion.div 
-            className="grid grid-cols-3 gap-8 max-w-md mx-auto"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <div className="text-center">
-              <div className="text-3xl font-bold text-brand-red mb-1">18+</div>
-              <div className="text-sm text-gray-600">다양한 취미</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-brand-teal mb-1">3</div>
-              <div className="text-sm text-gray-600">카테고리</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-brand-gold mb-1">∞</div>
-              <div className="text-sm text-gray-600">가능성</div>
-            </div>
-          </motion.div>
-        </div>
+        <motion.div
+          className="flex flex-wrap gap-2 mt-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          {(Object.keys(categoryThemes) as Array<keyof typeof categoryThemes>).map(
+            (key) => (
+              <Link
+                key={key}
+                href={`/category/${key}`}
+                className={`text-sm font-medium px-4 py-2 rounded-full border transition-colors ${categoryThemes[key].chip} hover:scale-105`}
+              >
+                {categoryThemes[key].emoji} {categoryThemes[key].label}
+              </Link>
+            )
+          )}
+        </motion.div>
       </div>
     </section>
   );

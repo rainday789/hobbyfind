@@ -15,9 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'HobbyFind - 새로운 취미를 발견하세요',
-  description: '운동형, 지능형, 예술형 취미 중에서 당신에게 맞는 취미를 찾아보세요. 로그인하면 관심 있는 취미를 북마크하고 관리할 수 있습니다.',
-  keywords: '취미, 취미 추천, 운동형 취미, 지능형 취미, 예술형 취미, 북마크',
+  title: 'HobbyFind - 취미 추천 · 북마크',
+  description:
+    '운동형, 지능형, 예술형 취미를 추천하고 북마크로 관리하세요. 로그인 후 마이페이지에서 카테고리별 통계를 확인할 수 있습니다.',
+  keywords: '취미, 취미 추천, 운동형, 지능형, 예술형, 북마크, HobbyFind',
 };
 
 export default function RootLayout({

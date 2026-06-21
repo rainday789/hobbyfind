@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "node scripts/kill-dev-ports.js && next dev -p 3000",
+    "dev:reset": "node scripts/kill-dev-ports.js && node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\" && next dev -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

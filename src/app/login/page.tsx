@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { Topbar } from '@/components/layout/topbar';
+import { AuthBrandPanel } from '@/components/auth/auth-brand-panel';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 
 const loginSchema = z.object({
@@ -102,119 +103,70 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-light">
+    <div className="min-h-screen pt-14">
       <Topbar />
-      
-      <main className="pt-20 pb-8">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center">
-            <Card className="w-full max-w-md">
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-bold text-neutral-dark">
-                  로그인
-                </CardTitle>
-                <CardDescription>
-                  계정에 로그인하여 취미를 북마크하고 관리하세요
-                </CardDescription>
-              </CardHeader>
-              
-              <CardContent>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>이메일</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
-                              <Input
-                                {...field}
-                                type="email"
-                                placeholder="이메일을 입력하세요"
-                                className="pl-10"
-                                disabled={isLoading}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>비밀번호</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
-                              <Input
-                                {...field}
-                                type={showPassword ? 'text' : 'password'}
-                                placeholder="비밀번호를 입력하세요"
-                                className="pl-10 pr-10"
-                                disabled={isLoading}
-                              />
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                                onClick={() => setShowPassword(!showPassword)}
-                                disabled={isLoading}
-                              >
-                                {showPassword ? (
-                                  <EyeOff className="h-4 w-4 text-gray-400" />
-                                ) : (
-                                  <Eye className="h-4 w-4 text-gray-400" />
-                                )}
-                              </Button>
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-brand-red hover:bg-brand-red/90"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? '로그인 중...' : '로그인'}
-                    </Button>
-                  </form>
-                </Form>
-                
-                <div className="mt-6 text-center space-y-4">
-                  {/* 회원가입 링크를 더 눈에 띄게 */}
-                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-sm text-blue-800 mb-2">
-                      아직 계정이 없으신가요?
-                    </p>
-                    <Link 
-                      href="/signup" 
-                      className="inline-flex items-center justify-center w-full px-4 py-2 bg-brand-red hover:bg-brand-red/90 text-white rounded-lg font-medium transition-colors"
-                    >
-                      회원가입하기
-                    </Link>
-                  </div>
-                  
-                  <Link 
-                    href="/" 
-                    className="text-sm text-gray-500 hover:text-gray-700 block"
-                  >
-                    홈으로 돌아가기
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+      <main className="container mx-auto px-4 py-10">
+        <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+          <AuthBrandPanel
+            title="다시 오신 걸 환영해요"
+            description="로그인하면 북마크한 취미와 취향 통계를 이어서 볼 수 있어요. 오늘의 추천도 놓치지 마세요."
+          />
+          <Card className="rounded-2xl border-line shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold text-ink">로그인</CardTitle>
+              <CardDescription>HobbyFind 계정으로 로그인</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>이메일</FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted w-4 h-4 z-10" />
+                            <Input {...field} type="email" placeholder="you@email.com" className="pl-10 rounded-xl" disabled={isLoading} />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>비밀번호</FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted w-4 h-4 z-10" />
+                            <Input {...field} type={showPassword ? 'text' : 'password'} placeholder="••••••••" className="pl-10 pr-10 rounded-xl" disabled={isLoading} />
+                            <Button type="button" variant="ghost" size="sm" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowPassword(!showPassword)} disabled={isLoading}>
+                              {showPassword ? <EyeOff className="h-4 w-4 text-ink-muted" /> : <Eye className="h-4 w-4 text-ink-muted" />}
+                            </Button>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="w-full rounded-xl bg-brand-primary hover:bg-brand-primary/90" disabled={isLoading}>
+                    {isLoading ? '로그인 중...' : '로그인'}
+                  </Button>
+                </form>
+              </Form>
+              <p className="mt-6 text-center text-sm text-ink-muted">
+                계정이 없나요?{' '}
+                <Link href="/signup" className="text-brand-primary font-semibold hover:underline">
+                  회원가입
+                </Link>
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>

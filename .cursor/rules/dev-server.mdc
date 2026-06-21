@@ -1,0 +1,36 @@
+---
+description: Local dev server must always use port 3000 only
+alwaysApply: true
+---
+
+# Dev Server (Port 3000 Only)
+
+## Rule
+
+- Local development and browser testing use **http://localhost:3000** only.
+- Never use or suggest 3001/3002 unless the user explicitly asks.
+
+## Before starting or restarting dev
+
+When adding features, fixing UI, or testing in the browser:
+
+1. **Agent:** Run port cleanup first — do not ask the user to do it unless cleanup fails.
+   - Preferred: `npm run dev` or `npm run dev:reset` (both kill 3000–3002 then start on 3000).
+   - Or run `node scripts/kill-dev-ports.js` before starting the server.
+2. **User terminal:** If the user already has a dev server running, tell them to press **Ctrl+C** once, then run `npm run dev` or `npm run dev:reset`.
+
+## Do not
+
+- Start a second dev server while one is already running.
+- Run `npm run build` while `npm run dev` is active (breaks `.next` cache).
+- Leave background dev processes on 3001/3002.
+
+## Cache issues
+
+If refresh breaks CSS/JS (404 on `/_next/static/...`):
+
+```powershell
+npm run dev:reset
+```
+
+Then hard refresh: **Ctrl + Shift + R**

@@ -1,6 +1,7 @@
 'use client';
 
 import { HobbyCard } from './hobby-card';
+import type { SortOption } from './hobby-toolbar';
 
 interface Hobby {
   id: string;
@@ -13,51 +14,77 @@ interface Hobby {
 interface HobbyGridProps {
   hobbies: Hobby[];
   selectedCategory: string;
+  searchQuery?: string;
+  sortOption?: SortOption;
   onBookmarkToggle?: (id: string, isBookmarked: boolean) => void;
 }
 
-export function HobbyGrid({ hobbies, selectedCategory, onBookmarkToggle }: HobbyGridProps) {
-  const filteredHobbies = selectedCategory === 'all'
-    ? hobbies
-    : hobbies.filter((hobby) => hobby.category === selectedCategory);
+function filterAndSort(
+  hobbies: Hobby[],
+  selectedCategory: string,
+  searchQuery: string,
+  sortOption: SortOption
+) {
+  let result =
+    selectedCategory === 'all'
+      ? hobbies
+      : hobbies.filter((h) => h.category === selectedCategory);
+
+  const query = searchQuery.trim().toLowerCase();
+  if (query) {
+    result = result.filter(
+      (h) =>
+        h.title.toLowerCase().includes(query) ||
+        h.description.toLowerCase().includes(query)
+    );
+  }
+
+  if (sortOption === 'name-asc') {
+    result = [...result].sort((a, b) => a.title.localeCompare(b.title, 'ko'));
+  } else if (sortOption === 'name-desc') {
+    result = [...result].sort((a, b) => b.title.localeCompare(a.title, 'ko'));
+  }
+
+  return result;
+}
+
+export function HobbyGrid({
+  hobbies,
+  selectedCategory,
+  searchQuery = '',
+  sortOption = 'default',
+  onBookmarkToggle,
+}: HobbyGridProps) {
+  const filteredHobbies = filterAndSort(
+    hobbies,
+    selectedCategory,
+    searchQuery,
+    sortOption
+  );
 
   if (filteredHobbies.length === 0) {
     return (
-      <div className="text-center py-12">
-        <div className="text-gray-500 mb-4">
-          <svg
-            className="mx-auto h-12 w-12"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"
-            />
-          </svg>
-        </div>
-        <h3 className="text-lg font-medium text-neutral-dark mb-2">
-          {selectedCategory !== 'all' ? '해당 카테고리의 취미가 없습니다' : '취미를 찾을 수 없습니다'}
+      <div className="text-center py-16 rounded-2xl bg-white border border-line border-dashed">
+        <p className="text-4xl mb-4">🔍</p>
+        <h3 className="text-lg font-semibold text-ink mb-2">
+          {searchQuery ? '검색 결과가 없어요' : '표시할 취미가 없어요'}
         </h3>
-        <p className="text-gray-500">
-          {selectedCategory !== 'all'
-            ? '다른 카테고리를 선택해보세요.' 
-            : '잠시 후 다시 시도해주세요.'
-          }
+        <p className="text-ink-muted text-sm">
+          {searchQuery
+            ? '다른 키워드로 검색하거나 필터를 바꿔보세요.'
+            : '카테고리 필터를 조정해보세요.'}
         </p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {filteredHobbies.map((hobby) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {filteredHobbies.map((hobby, index) => (
         <HobbyCard
           key={hobby.id}
           {...hobby}
+          index={index}
           onBookmarkToggle={onBookmarkToggle}
         />
       ))}

@@ -51,13 +51,21 @@ const config = {
           DEFAULT: 'hsl(var(--success))',
           foreground: 'hsl(var(--success-foreground))',
         },
-        // 디자인 문서 기반 추가 컬러
-        'brand-red': '#FF385C', // Primary
-        'brand-teal': '#008489', // Secondary
-        'brand-gold': '#FFD700', // Accent
-        'neutral-light': '#F7F7F7', // Neutral Light
-        'neutral-dark': '#222222', // Neutral Dark
-        'border-gray': '#E5E5E5', // Border Gray
+        // 라프텔 inspired palette (#816BFF purple)
+        'brand-primary': '#816BFF',
+        'brand-secondary': '#5B8DEF',
+        'brand-accent': '#FF6B9D',
+        'brand-purple-light': '#F0EDFF',
+        'surface': '#F4F4F8',
+        'ink': '#1A1A2E',
+        'ink-muted': '#6B7280',
+        'line': '#E8E8EF',
+        'brand-red': '#816BFF',
+        'brand-teal': '#5B8DEF',
+        'brand-gold': '#FF6B9D',
+        'neutral-light': '#F4F4F8',
+        'neutral-dark': '#1A1A2E',
+        'border-gray': '#E8E8EF',
         'success-green': '#4CAF50', // Success
         'error-red': '#F44336', // Error
       },

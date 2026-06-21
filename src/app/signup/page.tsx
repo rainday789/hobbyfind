@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { Topbar } from '@/components/layout/topbar';
+import { AuthBrandPanel } from '@/components/auth/auth-brand-panel';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
 
 const signupSchema = z.object({
@@ -131,179 +132,89 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-light">
+    <div className="min-h-screen pt-14">
       <Topbar />
-      
-      <main className="pt-20 pb-8">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center">
-            <Card className="w-full max-w-md">
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-bold text-neutral-dark">
-                  회원가입
-                </CardTitle>
-                <CardDescription>
-                  새로운 계정을 만들어 취미를 북마크하고 관리하세요
-                </CardDescription>
-              </CardHeader>
-              
-              <CardContent>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>이메일</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
-                              <Input
-                                {...field}
-                                type="email"
-                                placeholder="이메일을 입력하세요"
-                                className="pl-10"
-                                disabled={isLoading}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="username"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>사용자명</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
-                              <Input
-                                {...field}
-                                type="text"
-                                placeholder="사용자명을 입력하세요"
-                                className="pl-10"
-                                disabled={isLoading}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>비밀번호</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
-                              <Input
-                                {...field}
-                                type={showPassword ? 'text' : 'password'}
-                                placeholder="비밀번호를 입력하세요 (6자 이상)"
-                                className="pl-10 pr-10"
-                                disabled={isLoading}
-                              />
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                                onClick={() => setShowPassword(!showPassword)}
-                                disabled={isLoading}
-                              >
-                                {showPassword ? (
-                                  <EyeOff className="h-4 w-4 text-gray-400" />
-                                ) : (
-                                  <Eye className="h-4 w-4 text-gray-400" />
-                                )}
-                              </Button>
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="confirmPassword"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>비밀번호 확인</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
-                              <Input
-                                {...field}
-                                type={showConfirmPassword ? 'text' : 'password'}
-                                placeholder="비밀번호를 다시 입력하세요"
-                                className="pl-10 pr-10"
-                                disabled={isLoading}
-                              />
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                disabled={isLoading}
-                              >
-                                {showConfirmPassword ? (
-                                  <EyeOff className="h-4 w-4 text-gray-400" />
-                                ) : (
-                                  <Eye className="h-4 w-4 text-gray-400" />
-                                )}
-                              </Button>
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-brand-red hover:bg-brand-red/90"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? '가입 중...' : '회원가입'}
-                    </Button>
-                  </form>
-                </Form>
-                
-                <div className="mt-6 text-center space-y-4">
-                  {/* 로그인 링크를 더 눈에 띄게 */}
-                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <p className="text-sm text-green-800 mb-2">
-                      이미 계정이 있으신가요?
-                    </p>
-                    <Link 
-                      href="/login" 
-                      className="inline-flex items-center justify-center w-full px-4 py-2 bg-brand-teal hover:bg-brand-teal/90 text-white rounded-lg font-medium transition-colors"
-                    >
-                      로그인하기
-                    </Link>
-                  </div>
-                  
-                  <Link 
-                    href="/" 
-                    className="text-sm text-gray-500 hover:text-gray-700 block"
-                  >
-                    홈으로 돌아가기
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+      <main className="container mx-auto px-4 py-10">
+        <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+          <AuthBrandPanel
+            title="취미 찜 목록, 여기서 시작"
+            description="회원가입 후 관심 취미를 북마크하고, 마이페이지에서 카테고리별 통계를 확인하세요."
+          />
+          <Card className="rounded-2xl border-line shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold text-ink">회원가입</CardTitle>
+              <CardDescription>HobbyFind에 가입하고 취미를 찜해보세요</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField control={form.control} name="email" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>이메일</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted w-4 h-4 z-10" />
+                          <Input {...field} type="email" placeholder="you@email.com" className="pl-10 rounded-xl" disabled={isLoading} />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <FormField control={form.control} name="username" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>사용자명</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted w-4 h-4 z-10" />
+                          <Input {...field} type="text" placeholder="닉네임" className="pl-10 rounded-xl" disabled={isLoading} />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <FormField control={form.control} name="password" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>비밀번호</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted w-4 h-4 z-10" />
+                          <Input {...field} type={showPassword ? 'text' : 'password'} placeholder="6자 이상" className="pl-10 pr-10 rounded-xl" disabled={isLoading} />
+                          <Button type="button" variant="ghost" size="sm" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowPassword(!showPassword)} disabled={isLoading}>
+                            {showPassword ? <EyeOff className="h-4 w-4 text-ink-muted" /> : <Eye className="h-4 w-4 text-ink-muted" />}
+                          </Button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <FormField control={form.control} name="confirmPassword" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>비밀번호 확인</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted w-4 h-4 z-10" />
+                          <Input {...field} type={showConfirmPassword ? 'text' : 'password'} placeholder="비밀번호 재입력" className="pl-10 pr-10 rounded-xl" disabled={isLoading} />
+                          <Button type="button" variant="ghost" size="sm" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowConfirmPassword(!showConfirmPassword)} disabled={isLoading}>
+                            {showConfirmPassword ? <EyeOff className="h-4 w-4 text-ink-muted" /> : <Eye className="h-4 w-4 text-ink-muted" />}
+                          </Button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <Button type="submit" className="w-full rounded-xl bg-brand-primary hover:bg-brand-primary/90" disabled={isLoading}>
+                    {isLoading ? '가입 중...' : '가입하기'}
+                  </Button>
+                </form>
+              </Form>
+              <p className="mt-6 text-center text-sm text-ink-muted">
+                이미 계정이 있나요?{' '}
+                <Link href="/login" className="text-brand-primary font-semibold hover:underline">
+                  로그인
+                </Link>
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>

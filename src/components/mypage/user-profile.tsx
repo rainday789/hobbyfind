@@ -2,67 +2,41 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { User, Mail, Calendar } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 interface UserProfileProps {
-  user: any;
+  user: {
+    name?: string | null;
+    email?: string | null;
+  };
   bookmarkCount?: number;
 }
 
 export function UserProfile({ user, bookmarkCount = 0 }: UserProfileProps) {
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(word => word.charAt(0))
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
+  const initials = (user?.name || user?.email || 'U')
+    .slice(0, 2)
+    .toUpperCase();
 
   return (
-    <Card className="bg-white shadow-sm">
+    <Card className="rounded-2xl border-line overflow-hidden">
+      <div className="h-2 bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent" />
       <CardContent className="p-6">
-        <div className="flex items-center space-x-4">
-          <Avatar className="w-16 h-16">
-            <AvatarFallback className="bg-brand-red text-white text-xl font-semibold">
-              {user?.name ? getInitials(user.name) : user?.email?.charAt(0).toUpperCase() || 'U'}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <Avatar className="w-16 h-16 ring-4 ring-brand-primary/10">
+            <AvatarFallback className="bg-brand-primary text-white text-lg font-bold">
+              {initials}
             </AvatarFallback>
           </Avatar>
-          
           <div className="flex-1">
-            <div className="flex items-center space-x-2 mb-2">
-              <User className="w-4 h-4 text-gray-500" />
-              <h2 className="text-xl font-semibold text-neutral-dark">
-                {user?.name || '사용자'}
-              </h2>
+            <div className="flex items-center gap-2 mb-1">
+              <Sparkles className="w-4 h-4 text-brand-accent" />
+              <h2 className="text-xl font-bold text-ink">{user?.name || '회원'}</h2>
             </div>
-            
-            <div className="flex items-center space-x-2 mb-1">
-              <Mail className="w-4 h-4 text-gray-500" />
-              <span className="text-gray-600">{user?.email}</span>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <Calendar className="w-4 h-4 text-gray-500" />
-              <span className="text-gray-600">
-                가입일: {user?.createdAt ? formatDate(user.createdAt) : '정보 없음'}
-              </span>
-            </div>
+            <p className="text-ink-muted text-sm">{user?.email}</p>
           </div>
-          
-          <div className="text-right">
-            <div className="text-2xl font-bold text-brand-red">
-              {bookmarkCount}
-            </div>
-            <div className="text-sm text-gray-600">북마크</div>
+          <div className="text-center sm:text-right px-4 py-3 rounded-xl bg-surface border border-line">
+            <p className="text-2xl font-bold text-brand-primary">{bookmarkCount}</p>
+            <p className="text-xs text-ink-muted">저장한 취미</p>
           </div>
         </div>
       </CardContent>
