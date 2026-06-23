@@ -25,9 +25,10 @@ export function HobbyCarousel() {
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
+    const usedCopyKeys = new Set<string>();
     const picked = shuffleHobbies(hobbies, SLIDE_COUNT).map((hobby) => ({
       ...hobby,
-      copy: getCarouselSlideCopy(hobby),
+      copy: getCarouselSlideCopy(hobby, usedCopyKeys),
     }));
     setSlides(picked);
     setIndex(0);
