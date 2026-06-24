@@ -111,7 +111,7 @@ export default function LoginPage() {
             title="다시 오신 걸 환영해요"
             description="로그인하면 북마크한 취미와 취향 통계를 이어서 볼 수 있어요. 오늘의 추천도 놓치지 마세요."
           />
-          <Card className="rounded-2xl border-line shadow-lg">
+          <Card className="rounded-2xl summer-panel shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-ink">로그인</CardTitle>
               <CardDescription>HobbyFind 계정으로 로그인</CardDescription>
@@ -154,14 +154,14 @@ export default function LoginPage() {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full rounded-xl bg-brand-primary hover:bg-brand-primary/90" disabled={isLoading}>
+                  <Button type="submit" className="w-full rounded-xl bg-sky-600 hover:bg-sky-700" disabled={isLoading}>
                     {isLoading ? '로그인 중...' : '로그인'}
                   </Button>
                 </form>
               </Form>
               <p className="mt-6 text-center text-sm text-ink-muted">
                 계정이 없나요?{' '}
-                <Link href="/signup" className="text-brand-primary font-semibold hover:underline">
+                <Link href="/signup" className="text-sky-700 font-semibold hover:underline">
                   회원가입
                 </Link>
               </p>

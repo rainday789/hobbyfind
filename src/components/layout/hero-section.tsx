@@ -13,11 +13,7 @@ export function HeroSection() {
   const copy = getHeroCopy(!!session, session?.user?.name);
 
   return (
-    <section className="relative overflow-hidden bg-white border-b border-line">
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-purple-light via-white to-brand-purple-light/50" />
-      <div className="absolute top-0 right-0 w-72 h-72 bg-brand-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-      <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-accent/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4" />
-
+    <section className="relative overflow-hidden summer-section">
       <div className="container mx-auto px-4 py-10 md:py-14 relative">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -25,7 +21,7 @@ export function HeroSection() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl"
         >
-          <span className="inline-block text-xs font-bold text-brand-primary bg-brand-purple-light px-3 py-1 rounded-full mb-4">
+          <span className="hero-badge mb-4">
             {copy.badge}
           </span>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink leading-tight mb-4 whitespace-pre-line">
@@ -38,7 +34,7 @@ export function HeroSection() {
             <Button
               asChild
               size="lg"
-              className="rounded-full bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold px-8 shadow-lg shadow-brand-primary/25"
+              className="rounded-full bg-sky-600 hover:bg-sky-700 text-white font-semibold px-8"
             >
               <Link href="#recommendations" className="flex items-center gap-2">
                 추천 보러가기
@@ -50,7 +46,7 @@ export function HeroSection() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="rounded-full border-brand-primary/30 text-brand-primary hover:bg-brand-purple-light"
+                className="rounded-full border-2 border-sky-600 bg-white text-sky-700 hover:bg-sky-50"
               >
                 <Link href="/signup">회원가입하고 찜하기</Link>
               </Button>

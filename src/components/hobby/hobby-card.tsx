@@ -109,8 +109,8 @@ export function HobbyCard({
       className={cn(
         'group relative overflow-hidden bg-white transition-all duration-300 scroll-mt-24',
         isPoster
-          ? 'rounded-xl shadow-sm hover:shadow-lg hover:shadow-brand-primary/15'
-          : 'rounded-2xl border border-line shadow-sm hover:shadow-lg hover:shadow-brand-primary/10'
+          ? 'rounded-xl shadow-sm hover:shadow-md'
+          : 'rounded-2xl border border-sky-200 shadow-sm hover:shadow-md'
       )}
     >
       <div
@@ -171,7 +171,7 @@ export function HobbyCard({
         )}
       </div>
       {isPoster && (
-        <div className="px-2.5 py-2.5 border-t border-line">
+        <div className="px-2.5 py-2.5 border-t border-sky-200">
           <h3 className="text-sm font-bold text-ink line-clamp-1 mb-0.5">{title}</h3>
           <p className="text-xs text-ink-muted line-clamp-2 leading-relaxed">
             {description}

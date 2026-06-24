@@ -7,7 +7,7 @@ interface AuthBrandPanelProps {
 
 export function AuthBrandPanel({ title, description }: AuthBrandPanelProps) {
   return (
-    <div className="hidden lg:flex flex-col justify-between p-10 rounded-2xl bg-gradient-to-br from-brand-primary to-[#6B5CE7] text-white min-h-[480px]">
+    <div className="hidden lg:flex flex-col justify-between p-10 rounded-2xl bg-sky-600 text-white min-h-[480px]">
       <div>
         <div className="flex items-center gap-2 mb-8">
           <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">

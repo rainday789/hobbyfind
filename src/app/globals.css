@@ -4,33 +4,34 @@
 
 @layer base {
   :root {
-    --background: 240 20% 98%;
-    --foreground: 240 10% 12%;
+    /* Sky + Slate — Tailwind UI / SaaS에서 많이 쓰는 하늘색 조합 */
+    --background: 204 100% 97%;
+    --foreground: 201 80% 16%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 12%;
+    --card-foreground: 201 80% 16%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 12%;
-    --primary: 252 100% 71%;
+    --popover-foreground: 201 80% 16%;
+    --primary: 199 89% 48%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 252 60% 96%;
-    --secondary-foreground: 252 100% 40%;
-    --muted: 240 20% 96%;
-    --muted-foreground: 240 5% 46%;
-    --accent: 340 100% 71%;
+    --secondary: 204 94% 94%;
+    --secondary-foreground: 201 90% 27%;
+    --muted: 204 100% 97%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 38 92% 50%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 240 10% 92%;
-    --input: 240 10% 92%;
-    --ring: 252 100% 71%;
+    --border: 201 94% 86%;
+    --input: 204 94% 94%;
+    --ring: 199 89% 48%;
     --radius: 0.75rem;
     --success: 160 84% 32%;
     --success-foreground: 0 0% 100%;
-    --chart-1: 252 100% 71%;
-    --chart-2: 220 80% 65%;
-    --chart-3: 340 100% 71%;
-    --chart-4: 252 80% 85%;
-    --chart-5: 340 80% 85%;
+    --chart-1: 199 89% 48%;
+    --chart-2: 201 90% 27%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 204 94% 94%;
+    --chart-5: 226 100% 94%;
   }
 }
 
@@ -40,7 +41,7 @@
   }
   body {
     @apply bg-surface text-ink antialiased;
-    background-color: #f4f4f8;
+    min-height: 100vh;
   }
 }
 
@@ -59,8 +60,29 @@
     overflow: hidden;
   }
 
+  /* 흰 네비 + sky-200 구분선 */
   .glass-nav {
-    @apply bg-white/95 backdrop-blur-md border-b border-line shadow-sm;
+    @apply bg-white border-b border-sky-200 shadow-sm;
+  }
+
+  /* 흰 카드 + sky-200 테두리 */
+  .summer-panel {
+    @apply bg-white border border-sky-200 shadow-sm;
+  }
+
+  /* 히어로·카테고리 헤더: 흰 박스 */
+  .summer-section {
+    @apply border-b border-sky-200 bg-white;
+  }
+
+  /* sky-100 배경 + sky-800 텍스트 뱃지 */
+  .hero-badge {
+    @apply inline-block text-xs font-bold text-sky-800 bg-sky-100 border border-sky-200 px-3 py-1 rounded-full;
+  }
+
+  /* 교차 섹션 밴드 */
+  .sky-band {
+    @apply bg-sky-100 border-t border-b border-sky-200;
   }
 
   .laftel-section-title {
@@ -68,7 +90,7 @@
   }
 
   .laftel-section-bar {
-    @apply w-1 h-6 rounded-full bg-brand-primary inline-block;
+    @apply w-1 h-6 rounded-full bg-sky-600 inline-block;
   }
 
   .scrollbar-hide {

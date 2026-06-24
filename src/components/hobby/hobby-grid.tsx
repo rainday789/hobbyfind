@@ -64,7 +64,7 @@ export function HobbyGrid({
 
   if (filteredHobbies.length === 0) {
     return (
-      <div className="text-center py-16 rounded-2xl bg-white border border-line border-dashed">
+      <div className="text-center py-16 rounded-2xl summer-panel border-dashed">
         <p className="text-4xl mb-4">🔍</p>
         <h3 className="text-lg font-semibold text-ink mb-2">
           {searchQuery ? '검색 결과가 없어요' : '표시할 취미가 없어요'}

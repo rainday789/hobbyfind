@@ -98,7 +98,8 @@ export default function Home() {
         </div>
 
         {/* 가이드 필수: 카테고리 필터 + 그리드 탐색 */}
-        <div id="hobbies" className="container mx-auto px-4 py-10 border-t border-line">
+        <div id="hobbies" className="sky-band rounded-t-3xl">
+          <div className="container mx-auto px-4 py-10">
           <div className="mb-8">
             <h2 className="laftel-section-title mb-2">
               <span className="laftel-section-bar" />
@@ -128,6 +129,7 @@ export default function Home() {
               searchQuery={searchQuery}
               sortOption={sortOption}
             />
+          </div>
           </div>
         </div>
       </main>

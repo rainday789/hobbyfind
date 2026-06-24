@@ -14,10 +14,11 @@ alwaysApply: true
 
 When adding features, fixing UI, or testing in the browser:
 
-1. **Agent:** Run port cleanup first — do not ask the user to do it unless cleanup fails.
-   - Preferred: `npm run dev` or `npm run dev:reset` (both kill 3000–3002 then start on 3000).
-   - Or run `node scripts/kill-dev-ports.js` before starting the server.
-2. **User terminal:** If the user already has a dev server running, tell them to press **Ctrl+C** once, then run `npm run dev` or `npm run dev:reset`.
+1. **Agent:** Automatically run the dev server — do not ask the user to start it.
+   - If no dev server is running on port 3000, run `npm run dev` in the background.
+   - If port 3000 is in use or CSS/JS looks stale, run `npm run dev:reset` instead.
+   - Run port cleanup first via those scripts — do not ask the user unless cleanup fails.
+2. **User terminal:** If the user already has a dev server running in their own terminal, do not start a second one. Tell them to press **Ctrl+C** once, then run `npm run dev` or `npm run dev:reset`.
 
 ## Do not
 

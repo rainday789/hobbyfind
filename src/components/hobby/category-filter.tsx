@@ -49,10 +49,10 @@ export function CategoryFilter({
             className={cn(
               'inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200',
               isActive
-                ? 'bg-brand-primary text-white border-brand-primary shadow-md shadow-brand-primary/20'
+                ? 'bg-sky-600 text-white border-sky-600 shadow-sm'
                 : theme
                   ? `${theme.chip} hover:scale-105`
-                  : 'bg-white border-line text-ink-muted hover:border-brand-primary/30'
+                  : 'summer-panel text-ink-muted hover:border-sky-400'
             )}
           >
             <span>{category.emoji}</span>

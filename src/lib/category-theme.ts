@@ -1,6 +1,6 @@
 export type HobbyCategory = 'sports' | 'intelligence' | 'art';
 
-/** 라프텔 톤: 퍼플 베이스 + 카테고리별 포인트 */
+/** Sky + Amber + Indigo — 하늘색 UI에서 흔한 보조색 3분할 */
 export const categoryThemes: Record<
   HobbyCategory,
   { label: string; emoji: string; chip: string; badge: string; gradient: string; ring: string }
@@ -8,26 +8,26 @@ export const categoryThemes: Record<
   sports: {
     label: '운동형',
     emoji: '🏃',
-    chip: 'bg-[#816BFF]/10 text-[#816BFF] border-[#816BFF]/20',
-    badge: 'bg-[#816BFF] text-white',
-    gradient: 'from-[#816BFF]/90 to-[#A78BFA]/80',
-    ring: '#816BFF',
+    chip: 'bg-amber-100 text-amber-800 border-amber-200',
+    badge: 'bg-amber-500 text-white',
+    gradient: 'bg-amber-500',
+    ring: '#F59E0B',
   },
   intelligence: {
     label: '지능형',
     emoji: '🧩',
-    chip: 'bg-[#5B8DEF]/10 text-[#5B8DEF] border-[#5B8DEF]/20',
-    badge: 'bg-[#5B8DEF] text-white',
-    gradient: 'from-[#5B8DEF]/90 to-[#816BFF]/70',
-    ring: '#5B8DEF',
+    chip: 'bg-sky-100 text-sky-800 border-sky-200',
+    badge: 'bg-sky-600 text-white',
+    gradient: 'bg-sky-600',
+    ring: '#0284C7',
   },
   art: {
     label: '예술형',
     emoji: '🎨',
-    chip: 'bg-[#FF6B9D]/10 text-[#FF6B9D] border-[#FF6B9D]/20',
-    badge: 'bg-[#FF6B9D] text-white',
-    gradient: 'from-[#FF6B9D]/90 to-[#816BFF]/70',
-    ring: '#FF6B9D',
+    chip: 'bg-indigo-100 text-indigo-800 border-indigo-200',
+    badge: 'bg-indigo-500 text-white',
+    gradient: 'bg-indigo-500',
+    ring: '#6366F1',
   },
 };
 

@@ -140,7 +140,7 @@ export default function SignupPage() {
             title="취미 찜 목록, 여기서 시작"
             description="회원가입 후 관심 취미를 북마크하고, 마이페이지에서 카테고리별 통계를 확인하세요."
           />
-          <Card className="rounded-2xl border-line shadow-lg">
+          <Card className="rounded-2xl summer-panel shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-ink">회원가입</CardTitle>
               <CardDescription>HobbyFind에 가입하고 취미를 찜해보세요</CardDescription>
@@ -202,14 +202,14 @@ export default function SignupPage() {
                       <FormMessage />
                     </FormItem>
                   )} />
-                  <Button type="submit" className="w-full rounded-xl bg-brand-primary hover:bg-brand-primary/90" disabled={isLoading}>
+                  <Button type="submit" className="w-full rounded-xl bg-sky-600 hover:bg-sky-700" disabled={isLoading}>
                     {isLoading ? '가입 중...' : '가입하기'}
                   </Button>
                 </form>
               </Form>
               <p className="mt-6 text-center text-sm text-ink-muted">
                 이미 계정이 있나요?{' '}
-                <Link href="/login" className="text-brand-primary font-semibold hover:underline">
+                <Link href="/login" className="text-sky-700 font-semibold hover:underline">
                   로그인
                 </Link>
               </p>

@@ -55,7 +55,7 @@ export function HobbyCarousel() {
   if (slides.length === 0) {
     return (
       <div className="container mx-auto px-4 py-6">
-        <div className="h-48 md:h-72 rounded-2xl bg-brand-purple-light animate-pulse" />
+        <div className="h-48 md:h-72 rounded-2xl bg-sky-100 animate-pulse" />
       </div>
     );
   }
@@ -67,7 +67,7 @@ export function HobbyCarousel() {
       onMouseLeave={() => setPaused(false)}
       aria-label="오늘의 추천 취미 슬라이드"
     >
-      <div className="relative overflow-hidden rounded-2xl bg-ink shadow-lg shadow-brand-primary/10">
+      <div className="relative overflow-hidden rounded-2xl bg-ink shadow-lg shadow-sky-300/25">
         <AnimatePresence mode="wait">
           <motion.div
             key={current.id}
@@ -106,7 +106,7 @@ export function HobbyCarousel() {
               </p>
               <Link
                 href={`#hobby-${current.id}`}
-                className="inline-flex items-center gap-1 self-start text-sm font-semibold text-white bg-brand-primary hover:bg-brand-primary/90 px-4 py-2 rounded-lg transition-colors"
+                className="inline-flex items-center gap-1 self-start text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 px-4 py-2 rounded-lg transition-colors"
               >
                 {current.copy.cta}
                 <ChevronRight className="w-4 h-4" />
@@ -143,7 +143,7 @@ export function HobbyCarousel() {
                   className={cn(
                     'h-1.5 rounded-full transition-all',
                     i === index
-                      ? 'w-6 bg-brand-primary'
+                      ? 'w-6 bg-sky-500'
                       : 'w-1.5 bg-white/50 hover:bg-white/80'
                   )}
                 />

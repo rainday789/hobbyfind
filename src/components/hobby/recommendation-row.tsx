@@ -42,7 +42,7 @@ export function RecommendationRow({
         {viewAllHref && (
           <Link
             href={viewAllHref}
-            className="text-sm text-brand-primary font-medium flex items-center hover:underline shrink-0"
+            className="text-sm text-sky-700 font-medium flex items-center hover:underline shrink-0"
           >
             전체보기
             <ChevronRight className="w-4 h-4" />

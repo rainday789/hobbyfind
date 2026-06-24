@@ -53,7 +53,7 @@ export default function CategoryPage() {
     <div className="min-h-screen flex flex-col pt-14">
       <Topbar />
 
-      <section className="bg-white border-b border-line">
+      <section className="summer-section">
         <div className="container mx-auto px-4 py-8">
           <Link
             href="/"
@@ -85,7 +85,7 @@ export default function CategoryPage() {
             hobbies={categoryHobbies.slice(0, 5)}
           />
 
-          <div className="border-t border-line pt-8 mt-4">
+          <div className="border-t border-sky-200 pt-8 mt-4">
             <h2 className="laftel-section-title mb-4">
               <span className="laftel-section-bar" />
               {theme.label} 전체 보기

@@ -35,7 +35,7 @@ function DonutChart({
         }}
       >
         <div className="absolute inset-4 rounded-full bg-white flex flex-col items-center justify-center shadow-inner">
-          <span className="text-3xl font-bold text-brand-primary">{total}</span>
+          <span className="text-3xl font-bold text-sky-700">{total}</span>
           <span className="text-xs text-ink-muted">북마크</span>
         </div>
       </div>
@@ -73,7 +73,7 @@ export function CategoryStats({ stats, totalCount }: CategoryStatsProps) {
 
   if (totalCount === 0) {
     return (
-      <Card className="rounded-2xl border-line">
+      <Card className="rounded-2xl summer-panel border-sky-200">
         <CardContent className="text-center py-16">
           <p className="text-5xl mb-4">📊</p>
           <h3 className="text-xl font-semibold text-ink mb-2">아직 데이터가 없어요</h3>
@@ -85,7 +85,7 @@ export function CategoryStats({ stats, totalCount }: CategoryStatsProps) {
 
   return (
     <div className="space-y-6">
-      <Card className="rounded-2xl border-line overflow-hidden">
+      <Card className="rounded-2xl summer-panel overflow-hidden">
         <CardHeader>
           <CardTitle className="text-ink">취향 분포</CardTitle>
           <CardDescription>카테고리별 북마크 비율을 한눈에 확인하세요</CardDescription>
@@ -96,7 +96,7 @@ export function CategoryStats({ stats, totalCount }: CategoryStatsProps) {
       </Card>
 
       {topCategory && topCategory.value > 0 && (
-        <Card className="rounded-2xl border-line bg-gradient-to-r from-brand-primary/5 to-brand-secondary/5">
+        <Card className="rounded-2xl summer-panel bg-sky-50">
           <CardContent className="p-6 flex items-center gap-4">
             <span className="text-4xl">{topCategory.emoji}</span>
             <div>
