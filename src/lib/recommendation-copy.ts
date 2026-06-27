@@ -1,4 +1,5 @@
 import type { HobbyCategory } from './category-theme';
+import type { Hobby } from './data/hobbies';
 
 export interface CarouselSlideCopy {
   headline: string;
@@ -160,6 +161,25 @@ export function getCarouselSlideCopy(
     tagline,
     cta,
   };
+}
+
+const TODAY_PICK_PLAN: Array<{
+  category: HobbyCategory;
+  offset: number;
+  count: number;
+}> = [
+  { category: 'sports', offset: 2, count: 2 },
+  { category: 'intelligence', offset: 0, count: 2 },
+  { category: 'art', offset: 0, count: 2 },
+];
+
+/** 카테고리별로 골라 오늘의 추천(운동형 단독 행과 겹치지 않도록 구성) */
+export function getTodayPicks(allHobbies: Hobby[]): Hobby[] {
+  return TODAY_PICK_PLAN.flatMap(({ category, offset, count }) =>
+    allHobbies
+      .filter((hobby) => hobby.category === category)
+      .slice(offset, offset + count)
+  );
 }
 
 /** Fisher–Yates shuffle */

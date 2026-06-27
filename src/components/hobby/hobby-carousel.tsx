@@ -67,7 +67,7 @@ export function HobbyCarousel() {
       onMouseLeave={() => setPaused(false)}
       aria-label="오늘의 추천 취미 슬라이드"
     >
-      <div className="relative overflow-hidden rounded-2xl bg-ink shadow-lg shadow-sky-300/25">
+      <div className="relative overflow-hidden rounded-2xl border border-sky-200 bg-sky-50 shadow-sm">
         <AnimatePresence mode="wait">
           <motion.div
             key={current.id}
@@ -75,82 +75,87 @@ export function HobbyCarousel() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.45 }}
-            className="relative aspect-[16/7] md:aspect-[16/6] min-h-[200px] md:min-h-[280px]"
           >
-            <Image
-              src={current.imageUrl}
-              alt={current.title}
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 1200px"
-            />
-            {/* 하단만 살짝 어둡게 — 텍스트 가독용 */}
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+            <div className="relative aspect-[16/7] md:aspect-[16/6] min-h-[200px] md:min-h-[280px] bg-sky-50">
+              <Image
+                src={current.imageUrl}
+                alt={current.title}
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 1200px"
+              />
 
-            <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-8">
+              {slides.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => goTo(index - 1)}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-sky-200 text-ink hover:bg-sky-50 flex items-center justify-center shadow-sm"
+                    aria-label="이전 슬라이드"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => goTo(index + 1)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-sky-200 text-ink hover:bg-sky-50 flex items-center justify-center shadow-sm"
+                    aria-label="다음 슬라이드"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </>
+              )}
+            </div>
+
+            <div className="carousel-caption">
+              <p className="text-xs font-bold text-sky-700 uppercase tracking-wide mb-3">
+                오늘의 PICK
+              </p>
               <span
                 className={cn(
-                  'inline-flex self-start text-[11px] md:text-xs font-bold px-2.5 py-1 rounded-md mb-3',
+                  'inline-flex text-[11px] md:text-xs font-bold px-2.5 py-1 rounded-md mb-3',
                   getCategoryTheme(current.category)?.badge
                 )}
               >
                 {getCategoryTheme(current.category)?.emoji}{' '}
                 {getCategoryTheme(current.category)?.label}
               </span>
-              <p className="text-white text-lg md:text-2xl font-bold mb-2 drop-shadow-sm">
+              <p className="text-ink text-lg md:text-2xl font-bold mb-2">
                 {current.copy.headline}
               </p>
-              <p className="text-white/90 text-sm md:text-base font-medium mb-4 drop-shadow-sm max-w-xl">
+              <p className="text-ink-muted text-sm md:text-base mb-4 max-w-xl">
                 {current.copy.tagline}
               </p>
-              <Link
-                href={`#hobby-${current.id}`}
-                className="inline-flex items-center gap-1 self-start text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 px-4 py-2 rounded-lg transition-colors"
-              >
-                {current.copy.cta}
-                <ChevronRight className="w-4 h-4" />
-              </Link>
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <Link
+                  href={`/hobby/${current.id}`}
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 px-4 py-2 rounded-lg transition-colors"
+                >
+                  {current.copy.cta}
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+
+                {slides.length > 1 && (
+                  <div className="flex gap-1.5">
+                    {slides.map((slide, i) => (
+                      <button
+                        key={slide.id}
+                        type="button"
+                        onClick={() => goTo(i)}
+                        aria-label={`${i + 1}번째 슬라이드`}
+                        className={cn(
+                          'h-1.5 rounded-full transition-all',
+                          i === index ? 'w-6 bg-sky-600' : 'w-1.5 bg-sky-200 hover:bg-sky-400'
+                        )}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>
-
-        {slides.length > 1 && (
-          <>
-            <button
-              type="button"
-              onClick={() => goTo(index - 1)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/35 text-white hover:bg-black/50 backdrop-blur-sm flex items-center justify-center"
-              aria-label="이전 슬라이드"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => goTo(index + 1)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/35 text-white hover:bg-black/50 backdrop-blur-sm flex items-center justify-center"
-              aria-label="다음 슬라이드"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-              {slides.map((slide, i) => (
-                <button
-                  key={slide.id}
-                  type="button"
-                  onClick={() => goTo(i)}
-                  aria-label={`${i + 1}번째 슬라이드`}
-                  className={cn(
-                    'h-1.5 rounded-full transition-all',
-                    i === index
-                      ? 'w-6 bg-sky-500'
-                      : 'w-1.5 bg-white/50 hover:bg-white/80'
-                  )}
-                />
-              ))}
-            </div>
-          </>
-        )}
       </div>
     </section>
   );

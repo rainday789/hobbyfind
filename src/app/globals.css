@@ -70,19 +70,29 @@
     @apply bg-white border border-sky-200 shadow-sm;
   }
 
-  /* 히어로·카테고리 헤더: 흰 박스 */
+  /* 히어로·카테고리 헤더: sky-100 밴드 */
   .summer-section {
-    @apply border-b border-sky-200 bg-white;
+    @apply border-b border-sky-200 bg-sky-100;
   }
 
   /* sky-100 배경 + sky-800 텍스트 뱃지 */
   .hero-badge {
-    @apply inline-block text-xs font-bold text-sky-800 bg-sky-100 border border-sky-200 px-3 py-1 rounded-full;
+    @apply inline-block text-xs font-bold text-sky-800 bg-white border border-sky-200 px-3 py-1 rounded-full;
   }
 
   /* 교차 섹션 밴드 */
   .sky-band {
     @apply bg-sky-100 border-t border-b border-sky-200;
+  }
+
+  /* 캐러셀 하단 캡션 — sky-100 + 좌측 포인트 바 */
+  .carousel-caption {
+    @apply relative border-t border-sky-200 bg-sky-100 p-5 md:p-8 md:pl-10;
+  }
+
+  .carousel-caption::before {
+    content: '';
+    @apply absolute left-0 top-0 bottom-0 w-1 bg-sky-600;
   }
 
   .laftel-section-title {

@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -101,83 +102,82 @@ export function HobbyCard({
   };
 
   return (
-    <motion.article
-      id={`hobby-${id}`}
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay: index * 0.04 }}
-      className={cn(
-        'group relative overflow-hidden bg-white transition-all duration-300 scroll-mt-24',
-        isPoster
-          ? 'rounded-xl shadow-sm hover:shadow-md'
-          : 'rounded-2xl border border-sky-200 shadow-sm hover:shadow-md'
-      )}
-    >
-      <div
+    <Link href={`/hobby/${id}`} className="block">
+      <motion.article
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, delay: index * 0.04 }}
         className={cn(
-          'relative overflow-hidden',
-          isPoster ? 'aspect-[3/4]' : 'aspect-[5/4]'
+          'group relative overflow-hidden bg-white transition-all duration-300',
+          isPoster
+            ? 'rounded-xl shadow-sm hover:shadow-md'
+            : 'rounded-2xl border border-sky-200 shadow-sm hover:shadow-md'
         )}
       >
-        <Image
-          src={imageUrl}
-          alt={title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes={isPoster ? '180px' : '(max-width: 768px) 100vw, 33vw'}
-        />
-        {/* 하단 텍스트 가독용 — 이미지 전체를 덮지 않음 */}
-        {!isPoster && (
-          <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/65 to-transparent pointer-events-none" />
-        )}
-
-        <span
+        <div
           className={cn(
-            'absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded-md',
-            theme?.badge
+            'relative overflow-hidden',
+            isPoster ? 'aspect-[3/4]' : 'aspect-[5/4]'
           )}
         >
-          {theme?.label}
-        </span>
+          <Image
+            src={imageUrl}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes={isPoster ? '180px' : '(max-width: 768px) 100vw, 33vw'}
+          />
 
-        {session && (
-          <button
-            type="button"
-            onClick={handleBookmarkClick}
-            disabled={isLoading}
-            aria-label={bookmarked ? '북마크 해제' : '북마크 추가'}
+          <span
             className={cn(
-              'absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm',
-              bookmarked
-                ? 'bg-brand-accent text-white'
-                : 'bg-white/90 text-ink hover:bg-white'
+              'absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded-md',
+              theme?.badge
             )}
           >
-            {bookmarked ? (
-              <Heart className="w-3.5 h-3.5 fill-current" />
-            ) : (
-              <Bookmark className="w-3.5 h-3.5" />
-            )}
-          </button>
-        )}
+            {theme?.label}
+          </span>
 
-        {!isPoster && (
-          <div className="absolute bottom-0 left-0 right-0 p-3">
-            <h3 className="font-bold text-white leading-snug text-lg mb-1">
-              {title}
-            </h3>
-            <p className="text-sm text-white/90 line-clamp-2">{description}</p>
-          </div>
-        )}
-      </div>
-      {isPoster && (
-        <div className="px-2.5 py-2.5 border-t border-sky-200">
-          <h3 className="text-sm font-bold text-ink line-clamp-1 mb-0.5">{title}</h3>
-          <p className="text-xs text-ink-muted line-clamp-2 leading-relaxed">
+          {session && (
+            <button
+              type="button"
+              onClick={handleBookmarkClick}
+              disabled={isLoading}
+              aria-label={bookmarked ? '북마크 해제' : '북마크 추가'}
+              className={cn(
+                'absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm border border-sky-200 z-10',
+                bookmarked
+                  ? 'bg-amber-500 text-white'
+                  : 'bg-white text-ink hover:bg-sky-50'
+              )}
+            >
+              {bookmarked ? (
+                <Heart className="w-3.5 h-3.5 fill-current" />
+              ) : (
+                <Bookmark className="w-3.5 h-3.5" />
+              )}
+            </button>
+          )}
+        </div>
+
+        <div className={cn('border-t border-sky-200', isPoster ? 'px-2.5 py-2.5' : 'px-3 py-3')}>
+          <h3
+            className={cn(
+              'font-bold text-ink line-clamp-1 mb-0.5',
+              isPoster ? 'text-sm' : 'text-base'
+            )}
+          >
+            {title}
+          </h3>
+          <p
+            className={cn(
+              'text-ink-muted line-clamp-2 leading-relaxed',
+              isPoster ? 'text-xs' : 'text-sm'
+            )}
+          >
             {description}
           </p>
         </div>
-      )}
-    </motion.article>
+      </motion.article>
+    </Link>
   );
 }

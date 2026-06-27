@@ -187,7 +187,7 @@ export default function MyPage() {
                     </p>
                     <button
                       onClick={() => router.push('/#recommendations')}
-                      className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2 rounded-full font-medium"
+                      className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 rounded-full font-medium"
                     >
                       취미 탐색하기
                     </button>

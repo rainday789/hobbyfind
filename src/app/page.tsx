@@ -14,6 +14,7 @@ import { hobbies } from '@/lib/data/hobbies';
 import {
   getPersonalizedSubtitle,
   getPersonalizedTitle,
+  getTodayPicks,
   recommendationSections,
 } from '@/lib/recommendation-copy';
 import { Toaster } from '@/components/ui/toaster';
@@ -24,7 +25,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState<SortOption>('default');
 
-  const todayPicks = useMemo(() => hobbies.slice(0, 6), []);
+  const todayPicks = useMemo(() => getTodayPicks(hobbies), []);
   const sportsPicks = useMemo(
     () => hobbies.filter((h) => h.category === 'sports').slice(0, 6),
     []

@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Bookmark, Trash2, Calendar } from 'lucide-react';
@@ -74,7 +75,8 @@ export function BookmarkedHobbyGrid({ hobbies, onBookmarkRemove, isLoading }: Bo
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {hobbies.map((hobby) => (
-        <Card key={hobby.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105">
+        <Link key={hobby.id} href={`/hobby/${hobby.id}`} className="block">
+        <Card className="group overflow-hidden hover:shadow-md transition-all duration-300 h-full">
           <div className="relative h-48 overflow-hidden">
             <Image
               src={hobby.imageUrl}
@@ -100,8 +102,12 @@ export function BookmarkedHobbyGrid({ hobbies, onBookmarkRemove, isLoading }: Bo
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-white/80 text-red-500 hover:bg-red-50"
-                onClick={() => onBookmarkRemove(hobby.id)}
+                className="w-8 h-8 p-0 rounded-full bg-white border border-sky-200 text-red-500 hover:bg-red-50"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onBookmarkRemove(hobby.id);
+                }}
                 disabled={isLoading}
               >
                 <Trash2 className="w-4 h-4" />
@@ -121,6 +127,7 @@ export function BookmarkedHobbyGrid({ hobbies, onBookmarkRemove, isLoading }: Bo
             </p>
           </CardContent>
         </Card>
+        </Link>
       ))}
     </div>
   );
