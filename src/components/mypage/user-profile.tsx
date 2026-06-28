@@ -19,11 +19,11 @@ export function UserProfile({ user, bookmarkCount = 0 }: UserProfileProps) {
 
   return (
     <Card className="rounded-2xl summer-panel overflow-hidden">
-      <div className="h-2 bg-sky-600" />
+      <div className="h-2 bg-brand-primary" />
       <CardContent className="p-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-          <Avatar className="w-16 h-16 ring-4 ring-sky-100">
-            <AvatarFallback className="bg-sky-600 text-white text-lg font-bold">
+          <Avatar className="w-16 h-16 ring-4 ring-neutral-light">
+            <AvatarFallback className="bg-brand-primary text-white text-lg font-bold">
               {initials}
             </AvatarFallback>
           </Avatar>
@@ -34,8 +34,8 @@ export function UserProfile({ user, bookmarkCount = 0 }: UserProfileProps) {
             </div>
             <p className="text-ink-muted text-sm">{user?.email}</p>
           </div>
-          <div className="text-center sm:text-right px-4 py-3 rounded-xl bg-sky-50 border border-sky-200">
-            <p className="text-2xl font-bold text-sky-700">{bookmarkCount}</p>
+          <div className="text-center sm:text-right px-4 py-3 rounded-xl bg-neutral-light border border-border-gray">
+            <p className="text-2xl font-bold text-brand-primary">{bookmarkCount}</p>
             <p className="text-xs text-ink-muted">저장한 취미</p>
           </div>
         </div>

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Bookmark, Trash2, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { getCategoryTheme } from '@/lib/category-theme';
 
 interface BookmarkedHobby {
   id: string;
@@ -25,16 +26,7 @@ interface BookmarkedHobbyGridProps {
 
 export function BookmarkedHobbyGrid({ hobbies, onBookmarkRemove, isLoading }: BookmarkedHobbyGridProps) {
   const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'sports':
-        return 'bg-brand-red text-white';
-      case 'intelligence':
-        return 'bg-brand-teal text-white';
-      case 'art':
-        return 'bg-brand-gold text-neutral-dark';
-      default:
-        return 'bg-gray-500 text-white';
-    }
+    return getCategoryTheme(category)?.badge ?? 'bg-gray-500 text-white';
   };
 
   const getCategoryName = (category: string) => {
@@ -102,7 +94,7 @@ export function BookmarkedHobbyGrid({ hobbies, onBookmarkRemove, isLoading }: Bo
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-8 h-8 p-0 rounded-full bg-white border border-sky-200 text-red-500 hover:bg-red-50"
+                className="w-8 h-8 p-0 rounded-full bg-white border border-border-gray text-error-red hover:bg-red-50"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();

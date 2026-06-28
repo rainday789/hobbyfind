@@ -18,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { Topbar } from '@/components/layout/topbar';
 import { AuthBrandPanel } from '@/components/auth/auth-brand-panel';
@@ -33,6 +34,9 @@ const signupSchema = z.object({
     .min(6, '비밀번호는 6자 이상이어야 합니다.')
     .max(100, '비밀번호는 100자 이하여야 합니다.'),
   confirmPassword: z.string(),
+  termsAgreed: z.boolean().refine((val) => val === true, {
+    message: '약관에 동의해야 회원가입할 수 있습니다.',
+  }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: '비밀번호가 일치하지 않습니다.',
   path: ['confirmPassword'],
@@ -54,6 +58,7 @@ export default function SignupPage() {
       username: '',
       password: '',
       confirmPassword: '',
+      termsAgreed: false,
     },
   });
 
@@ -70,6 +75,7 @@ export default function SignupPage() {
           email: data.email,
           username: data.username,
           password: data.password,
+          termsAgreed: data.termsAgreed,
         }),
       });
 
@@ -202,14 +208,35 @@ export default function SignupPage() {
                       <FormMessage />
                     </FormItem>
                   )} />
-                  <Button type="submit" className="w-full rounded-xl bg-sky-600 hover:bg-sky-700" disabled={isLoading}>
+                  <FormField control={form.control} name="termsAgreed" render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-start gap-3 rounded-xl border border-border-gray bg-neutral-light/80 p-4">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={(checked) => field.onChange(checked === true)}
+                            disabled={isLoading}
+                            className="mt-0.5 border-border-gray data-[state=checked]:bg-brand-primary data-[state=checked]:border-brand-primary"
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel className="text-sm font-normal text-ink cursor-pointer">
+                            <span className="font-semibold text-brand-primary">[필수]</span>{' '}
+                            HobbyFind 이용약관 및 개인정보 처리방침에 동의합니다.
+                          </FormLabel>
+                          <FormMessage />
+                        </div>
+                      </div>
+                    </FormItem>
+                  )} />
+                  <Button type="submit" className="w-full rounded-xl bg-brand-primary hover:bg-[#E31C5F] text-white" disabled={isLoading}>
                     {isLoading ? '가입 중...' : '가입하기'}
                   </Button>
                 </form>
               </Form>
               <p className="mt-6 text-center text-sm text-ink-muted">
                 이미 계정이 있나요?{' '}
-                <Link href="/login" className="text-sky-700 font-semibold hover:underline">
+                <Link href="/login" className="text-brand-primary font-semibold hover:underline">
                   로그인
                 </Link>
               </p>

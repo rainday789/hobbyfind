@@ -13,6 +13,16 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: [
+          '"Noto Sans KR"',
+          'Pretendard',
+          'Apple SD Gothic Neo',
+          'Malgun Gothic',
+          'system-ui',
+          'sans-serif',
+        ],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -51,28 +61,27 @@ const config = {
           DEFAULT: 'hsl(var(--success))',
           foreground: 'hsl(var(--success-foreground))',
         },
-        /* Sky scale — primary #0284C7 / surface #F0F9FF / ink #0C4A6E */
-        'brand-primary': '#0284C7',
-        'brand-secondary': '#0369A1',
-        'brand-accent': '#F59E0B',
-        'brand-purple-light': '#E0F2FE',
-        'surface': '#F0F9FF',
-        'ink': '#0C4A6E',
-        'ink-muted': '#64748B',
-        'line': '#BAE6FD',
-        'brand-red': '#0284C7',
-        'brand-teal': '#0369A1',
-        'brand-gold': '#F59E0B',
-        'neutral-light': '#F0F9FF',
-        'neutral-dark': '#0C4A6E',
-        'border-gray': '#BAE6FD',
-        'success-green': '#0D9488',
-        'error-red': '#EF4444',
+        /* Airbnb Rausch palette — design.md §2 */
+        'brand-primary': '#FF385C',
+        'brand-teal': '#008489',
+        'brand-gold': '#FFD700',
+        'surface': '#FFFFFF',
+        'ink': '#222222',
+        'ink-muted': '#717171',
+        'neutral-light': '#F7F7F7',
+        'neutral-dark': '#222222',
+        'border-gray': '#DDDDDD',
+        'success-green': '#008489',
+        'error-red': '#C13515',
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      boxShadow: {
+        card: '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
+        'card-hover': '0 2px 4px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.08)',
       },
       keyframes: {
         'accordion-down': {

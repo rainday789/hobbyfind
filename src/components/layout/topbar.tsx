@@ -57,8 +57,8 @@ export function Topbar() {
             className={cn(
               'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
               pathname === '/'
-                ? 'text-sky-700 bg-sky-100'
-                : 'text-ink-muted hover:text-ink hover:bg-sky-50'
+                ? 'text-white bg-neutral-dark'
+                : 'text-ink-muted hover:text-ink hover:bg-neutral-light'
             )}
           >
             홈
@@ -70,8 +70,8 @@ export function Topbar() {
               className={cn(
                 'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
                 pathname === href
-                  ? 'text-sky-700 bg-sky-100'
-                  : 'text-ink-muted hover:text-ink hover:bg-sky-50'
+                  ? 'text-white bg-neutral-dark'
+                  : 'text-ink-muted hover:text-ink hover:bg-neutral-light'
               )}
             >
               {categoryThemes[id].label}
@@ -81,7 +81,7 @@ export function Topbar() {
 
         <div className="hidden md:flex items-center gap-2 shrink-0">
           {status === 'loading' ? (
-            <div className="w-20 h-8 bg-line rounded-lg animate-pulse" />
+            <div className="w-20 h-8 bg-border-gray rounded-lg animate-pulse" />
           ) : session ? (
             <>
               <Button
@@ -113,7 +113,7 @@ export function Topbar() {
               <Button
                 size="sm"
                 asChild
-                className="rounded-lg bg-sky-600 hover:bg-sky-700 text-white"
+                className="rounded-lg bg-brand-primary hover:bg-[#E31C5F] text-white"
               >
                 <Link href="/signup">회원가입</Link>
               </Button>

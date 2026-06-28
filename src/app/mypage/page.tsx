@@ -7,9 +7,8 @@ import { Topbar } from '@/components/layout/topbar';
 import { BookmarkedHobbyGrid } from '@/components/mypage/bookmarked-hobby-grid';
 import { CategoryStats } from '@/components/mypage/category-stats';
 import { UserProfile } from '@/components/mypage/user-profile';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Bookmark, BarChart3, User } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Bookmark } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 import { BookmarkedHobby } from '@/lib/bookmark-utils';
@@ -23,10 +22,9 @@ export default function MyPage() {
   const [stats, setStats] = useState<Record<string, number>>({});
   const [totalCount, setTotalCount] = useState(0);
 
-  // 북마크 데이터 로드
   const loadBookmarkData = async () => {
     if (!session?.user?.id) return;
-    
+
     setIsLoading(true);
     try {
       const [bookmarksResponse, statsResponse] = await Promise.all([
@@ -44,7 +42,7 @@ export default function MyPage() {
         setStats(statsData.data.stats);
         setTotalCount(statsData.data.totalCount);
       }
-    } catch (error) {
+    } catch {
       toast({
         title: '데이터 로드 실패',
         description: '북마크 데이터를 불러올 수 없습니다.',
@@ -55,23 +53,16 @@ export default function MyPage() {
     }
   };
 
-  // 로그인 상태 확인 및 데이터 로드
   useEffect(() => {
     if (status === 'loading') return;
-    
+
     if (!session) {
-      toast({
-        title: '로그인이 필요합니다',
-        description: '마이페이지를 이용하려면 로그인해주세요.',
-        variant: 'destructive',
-      });
-      router.push('/login');
+      router.push('/login?callbackUrl=/mypage');
     } else {
       loadBookmarkData();
     }
-  }, [session, status, router, toast]);
+  }, [session, status, router]);
 
-  // 로딩 중이거나 로그인하지 않은 경우
   if (status === 'loading') {
     return (
       <div className="min-h-screen bg-neutral-light">
@@ -81,10 +72,13 @@ export default function MyPage() {
             <div className="animate-pulse">
               <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
               <div className="h-4 bg-gray-200 rounded w-1/2 mb-8"></div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="h-64 bg-gray-200 rounded"></div>
-                ))}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2 space-y-4">
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="h-32 bg-gray-200 rounded"></div>
+                  ))}
+                </div>
+                <div className="h-64 bg-gray-200 rounded"></div>
               </div>
             </div>
           </div>
@@ -94,7 +88,7 @@ export default function MyPage() {
   }
 
   if (!session) {
-    return null; // 리다이렉트 중
+    return null;
   }
 
   const handleBookmarkRemove = async (hobbyId: string) => {
@@ -109,17 +103,19 @@ export default function MyPage() {
       });
 
       if (response.ok) {
-        setBookmarkedHobbies(prev => prev.filter(hobby => hobby.id !== hobbyId));
-        setTotalCount(prev => prev - 1);
-        
-        // 통계 업데이트
+        setBookmarkedHobbies((prev) => prev.filter((hobby) => hobby.id !== hobbyId));
+        setTotalCount((prev) => prev - 1);
+
         const updatedStats = { ...stats };
-        const removedHobby = bookmarkedHobbies.find(h => h.id === hobbyId);
+        const removedHobby = bookmarkedHobbies.find((h) => h.id === hobbyId);
         if (removedHobby) {
-          updatedStats[removedHobby.category] = Math.max(0, (updatedStats[removedHobby.category] || 0) - 1);
+          updatedStats[removedHobby.category] = Math.max(
+            0,
+            (updatedStats[removedHobby.category] || 0) - 1,
+          );
           setStats(updatedStats);
         }
-        
+
         toast({
           title: '북마크 제거됨',
           description: '북마크에서 제거했습니다.',
@@ -131,7 +127,8 @@ export default function MyPage() {
     } catch (error) {
       toast({
         title: '오류가 발생했습니다',
-        description: error instanceof Error ? error.message : '북마크를 제거할 수 없습니다. 다시 시도해주세요.',
+        description:
+          error instanceof Error ? error.message : '북마크를 제거할 수 없습니다. 다시 시도해주세요.',
         variant: 'destructive',
       });
     } finally {
@@ -142,7 +139,7 @@ export default function MyPage() {
   return (
     <div className="min-h-screen flex flex-col pt-14">
       <Topbar />
-      
+
       <main className="flex-1 pb-10">
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
@@ -155,30 +152,21 @@ export default function MyPage() {
             </p>
           </div>
 
-          {/* 사용자 프로필 카드 */}
           <div className="mb-8">
             <UserProfile user={session.user} bookmarkCount={totalCount} />
           </div>
 
-          {/* 탭 네비게이션 */}
-          <Tabs defaultValue="bookmarks" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 lg:w-auto">
-              <TabsTrigger value="bookmarks" className="flex items-center gap-2">
-                <Bookmark className="w-4 h-4" />
+          {/* Design §3.5 — Desktop 2/3 북마크 + 1/3 차트, Mobile 세로 스택 */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-4">
+              <h2 className="text-lg font-semibold text-ink flex items-center gap-2">
+                <Bookmark className="w-5 h-5 text-brand-primary" />
                 북마크 ({bookmarkedHobbies.length})
-              </TabsTrigger>
-              <TabsTrigger value="stats" className="flex items-center gap-2">
-                <BarChart3 className="w-4 h-4" />
-                통계
-              </TabsTrigger>
-            </TabsList>
-
-            {/* 북마크 탭 */}
-            <TabsContent value="bookmarks" className="space-y-6">
+              </h2>
               {bookmarkedHobbies.length === 0 ? (
-                <Card>
+                <Card className="rounded-2xl summer-panel">
                   <CardContent className="text-center py-12">
-                    <Bookmark className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                    <Bookmark className="w-16 h-16 text-ink-muted mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-ink mb-2">
                       아직 찜한 취미가 없어요
                     </h3>
@@ -187,7 +175,7 @@ export default function MyPage() {
                     </p>
                     <button
                       onClick={() => router.push('/#recommendations')}
-                      className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 rounded-full font-medium"
+                      className="bg-brand-primary hover:bg-[#E31C5F] text-white px-6 py-2 rounded-full font-medium"
                     >
                       취미 탐색하기
                     </button>
@@ -200,15 +188,13 @@ export default function MyPage() {
                   isLoading={isLoading}
                 />
               )}
-            </TabsContent>
+            </div>
 
-            {/* 통계 탭 */}
-            <TabsContent value="stats" className="space-y-6">
+            <div className="space-y-4">
+              <h2 className="text-lg font-semibold text-ink lg:sr-only">취향 통계</h2>
               <CategoryStats stats={stats} totalCount={totalCount} />
-            </TabsContent>
-
-
-          </Tabs>
+            </div>
+          </div>
         </div>
       </main>
     </div>

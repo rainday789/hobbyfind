@@ -34,7 +34,7 @@ export function HeroSection() {
             <Button
               asChild
               size="lg"
-              className="rounded-full bg-sky-600 hover:bg-sky-700 text-white font-semibold px-8"
+              className="rounded-full bg-brand-primary hover:bg-[#E31C5F] text-white font-semibold px-8"
             >
               <Link href="#recommendations" className="flex items-center gap-2">
                 추천 보러가기
@@ -46,7 +46,7 @@ export function HeroSection() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="rounded-full border-2 border-sky-600 bg-white text-sky-700 hover:bg-sky-50"
+                className="rounded-full border-2 border-brand-primary bg-white text-brand-primary hover:bg-neutral-light"
               >
                 <Link href="/signup">회원가입하고 찜하기</Link>
               </Button>

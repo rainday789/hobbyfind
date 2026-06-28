@@ -85,7 +85,7 @@ export default function CategoryPage() {
             hobbies={categoryHobbies.slice(0, 5)}
           />
 
-          <div className="border-t border-sky-200 pt-8 mt-4">
+          <div className="border-t border-border-gray pt-8 mt-4">
             <h2 className="laftel-section-title mb-4">
               <span className="laftel-section-bar" />
               {theme.label} 전체 보기

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Bookmark, CheckCircle2, Heart, Sparkles, Users } from 'lucide-react';
@@ -11,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/hooks/use-toast';
 import { getCategoryTheme } from '@/lib/category-theme';
+import { redirectGuestToLogin } from '@/lib/bookmark-auth';
 import type { Hobby } from '@/lib/data/hobbies';
 import {
   getDifficultyColor,
@@ -26,6 +28,8 @@ interface HobbyDetailViewProps {
 
 export function HobbyDetailView({ hobby, detail, relatedHobbies }: HobbyDetailViewProps) {
   const { data: session } = useSession();
+  const router = useRouter();
+  const pathname = usePathname();
   const { toast } = useToast();
   const [bookmarked, setBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,11 +53,7 @@ export function HobbyDetailView({ hobby, detail, relatedHobbies }: HobbyDetailVi
 
   const handleBookmarkToggle = async () => {
     if (!session) {
-      toast({
-        title: '로그인이 필요해요',
-        description: '북마크는 로그인 후 이용할 수 있어요.',
-        variant: 'destructive',
-      });
+      redirectGuestToLogin(router, pathname || `/hobby/${hobby.id}`);
       return;
     }
 
@@ -96,14 +96,14 @@ export function HobbyDetailView({ hobby, detail, relatedHobbies }: HobbyDetailVi
           <div className="container mx-auto px-4 py-6">
             <Link
               href={`/category/${hobby.category}`}
-              className="inline-flex items-center text-sm text-ink-muted hover:text-sky-700 mb-4"
+              className="inline-flex items-center text-sm text-ink-muted hover:text-brand-primary mb-4"
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
               {theme?.label} 목록
             </Link>
 
             <div className="grid lg:grid-cols-2 gap-8 items-start">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-sky-200 bg-white">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border-gray bg-white">
                 <Image
                   src={hobby.imageUrl}
                   alt={hobby.title}
@@ -126,7 +126,7 @@ export function HobbyDetailView({ hobby, detail, relatedHobbies }: HobbyDetailVi
 
                 <h1 className="text-3xl md:text-4xl font-bold text-ink mb-3">{hobby.title}</h1>
                 <p className="text-lg text-ink-muted leading-relaxed mb-4">{hobby.description}</p>
-                <p className="text-sky-800 font-medium mb-6 flex items-start gap-2">
+                <p className="text-ink font-medium mb-6 flex items-start gap-2">
                   <Sparkles className="w-5 h-5 shrink-0 mt-0.5" />
                   {detail.highlight}
                 </p>
@@ -135,7 +135,7 @@ export function HobbyDetailView({ hobby, detail, relatedHobbies }: HobbyDetailVi
                   <Button
                     onClick={handleBookmarkToggle}
                     disabled={isLoading}
-                    className="rounded-full bg-sky-600 hover:bg-sky-700 text-white"
+                    className="rounded-full bg-brand-primary hover:bg-[#E31C5F] text-white"
                   >
                     {bookmarked ? (
                       <>
@@ -149,7 +149,7 @@ export function HobbyDetailView({ hobby, detail, relatedHobbies }: HobbyDetailVi
                       </>
                     )}
                   </Button>
-                  <Button asChild variant="outline" className="rounded-full border-sky-300 text-sky-700 hover:bg-sky-50">
+                  <Button asChild variant="outline" className="rounded-full border-border-gray text-ink hover:bg-neutral-light">
                     <Link href="/">다른 추천 보기</Link>
                   </Button>
                 </div>
@@ -162,7 +162,7 @@ export function HobbyDetailView({ hobby, detail, relatedHobbies }: HobbyDetailVi
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             <div className="summer-panel rounded-2xl p-6">
               <h2 className="text-lg font-bold text-ink mb-3 flex items-center gap-2">
-                <Users className="w-5 h-5 text-sky-600" />
+                <Users className="w-5 h-5 text-brand-teal" />
                 이런 분께 추천
               </h2>
               <p className="text-ink-muted leading-relaxed">{detail.recommendFor}</p>
@@ -170,13 +170,13 @@ export function HobbyDetailView({ hobby, detail, relatedHobbies }: HobbyDetailVi
 
             <div className="summer-panel rounded-2xl p-6">
               <h2 className="text-lg font-bold text-ink mb-3 flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-sky-600" />
+                <CheckCircle2 className="w-5 h-5 text-brand-teal" />
                 시작 팁
               </h2>
               <ul className="space-y-2">
                 {detail.starterTips.map((tip) => (
                   <li key={tip} className="text-ink-muted text-sm leading-relaxed flex gap-2">
-                    <span className="text-sky-600 shrink-0">•</span>
+                    <span className="text-brand-primary shrink-0">•</span>
                     {tip}
                   </li>
                 ))}

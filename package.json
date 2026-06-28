@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node scripts/kill-dev-ports.js && next dev -p 3000",
     "dev:reset": "node scripts/kill-dev-ports.js && node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\" && next dev -p 3000",
-    "build": "next build",
+    "build": "node scripts/kill-dev-ports.js && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -42,6 +42,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7",
     "react-use": "^17",
+    "recharts": "^3.9.0",
     "server-only": "0.0.1",
     "ts-pattern": "^5",
     "zod": "^3",

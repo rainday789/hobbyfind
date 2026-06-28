@@ -35,7 +35,7 @@ export function HobbyToolbar({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="취미 이름·설명으로 검색..."
-          className="pl-10 rounded-xl border-sky-200 bg-white focus-visible:ring-sky-600"
+          className="pl-10 rounded-xl border-border-gray bg-white focus-visible:ring-brand-primary"
         />
       </div>
 
@@ -46,7 +46,7 @@ export function HobbyToolbar({
         <div className="flex items-center gap-2">
           <ArrowUpDown className="w-4 h-4 text-ink-muted hidden sm:block" />
           <Select value={sortOption} onValueChange={(v) => onSortChange(v as SortOption)}>
-            <SelectTrigger className="w-[140px] rounded-xl border-sky-200">
+            <SelectTrigger className="w-[140px] rounded-xl border-border-gray">
               <SelectValue placeholder="정렬" />
             </SelectTrigger>
             <SelectContent>

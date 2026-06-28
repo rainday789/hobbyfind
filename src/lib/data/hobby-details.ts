@@ -134,7 +134,7 @@ export function getHobbyDetail(id: string): HobbyDetail {
 
 export function getDifficultyColor(difficulty: HobbyDifficulty) {
   if (difficulty === '쉬움') return 'bg-emerald-100 text-emerald-800 border-emerald-200';
-  if (difficulty === '보통') return 'bg-sky-100 text-sky-800 border-sky-200';
+  if (difficulty === '보통') return 'bg-teal-50 text-teal-700 border-teal-100';
   return 'bg-amber-100 text-amber-800 border-amber-200';
 }
 

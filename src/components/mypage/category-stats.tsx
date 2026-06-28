@@ -2,40 +2,62 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { categoryThemes, type HobbyCategory } from '@/lib/category-theme';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 interface CategoryStatsProps {
   stats: Record<string, number>;
   totalCount: number;
 }
 
-function DonutChart({
-  segments,
-}: {
-  segments: { label: string; value: number; color: string; emoji: string }[];
-}) {
-  const total = segments.reduce((sum, s) => sum + s.value, 0);
-  if (total === 0) return null;
+type ChartSegment = {
+  label: string;
+  value: number;
+  color: string;
+  emoji: string;
+};
 
-  let cumulative = 0;
-  const gradientParts = segments
-    .filter((s) => s.value > 0)
-    .map((segment) => {
-      const percent = (segment.value / total) * 100;
-      const start = cumulative;
-      cumulative += percent;
-      return `${segment.color} ${start}% ${cumulative}%`;
-    });
+function StatsChart({ segments, total }: { segments: ChartSegment[]; total: number }) {
+  const chartData = segments.filter((segment) => segment.value > 0);
+
+  if (total === 0 || chartData.length === 0) return null;
 
   return (
     <div className="flex flex-col md:flex-row items-center gap-8">
-      <div
-        className="relative w-44 h-44 rounded-full shrink-0"
-        style={{
-          background: `conic-gradient(${gradientParts.join(', ')})`,
-        }}
-      >
-        <div className="absolute inset-4 rounded-full bg-white flex flex-col items-center justify-center shadow-inner">
-          <span className="text-3xl font-bold text-sky-700">{total}</span>
+      <div className="relative w-full max-w-[220px] h-[220px] shrink-0">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={chartData}
+              dataKey="value"
+              nameKey="label"
+              cx="50%"
+              cy="50%"
+              innerRadius={58}
+              outerRadius={82}
+              paddingAngle={2}
+              stroke="none"
+            >
+              {chartData.map((segment) => (
+                <Cell key={segment.label} fill={segment.color} />
+              ))}
+            </Pie>
+            <Tooltip
+              formatter={(value, _name, item) => {
+                const count = Number(value);
+                const percent = total > 0 ? Math.round((count / total) * 100) : 0;
+                const payload = item?.payload as ChartSegment | undefined;
+                return [`${count}개 (${percent}%)`, payload ? `${payload.emoji} ${payload.label}` : ''];
+              }}
+              contentStyle={{
+                borderRadius: '12px',
+                border: '1px solid #DDDDDD',
+                fontSize: '13px',
+              }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-3xl font-bold text-brand-primary">{total}</span>
           <span className="text-xs text-ink-muted">북마크</span>
         </div>
       </div>
@@ -73,7 +95,7 @@ export function CategoryStats({ stats, totalCount }: CategoryStatsProps) {
 
   if (totalCount === 0) {
     return (
-      <Card className="rounded-2xl summer-panel border-sky-200">
+      <Card className="rounded-2xl summer-panel border-border-gray">
         <CardContent className="text-center py-16">
           <p className="text-5xl mb-4">📊</p>
           <h3 className="text-xl font-semibold text-ink mb-2">아직 데이터가 없어요</h3>
@@ -91,12 +113,12 @@ export function CategoryStats({ stats, totalCount }: CategoryStatsProps) {
           <CardDescription>카테고리별 북마크 비율을 한눈에 확인하세요</CardDescription>
         </CardHeader>
         <CardContent>
-          <DonutChart segments={segments} />
+          <StatsChart segments={segments} total={totalCount} />
         </CardContent>
       </Card>
 
       {topCategory && topCategory.value > 0 && (
-        <Card className="rounded-2xl summer-panel bg-sky-50">
+        <Card className="rounded-2xl summer-panel bg-neutral-light">
           <CardContent className="p-6 flex items-center gap-4">
             <span className="text-4xl">{topCategory.emoji}</span>
             <div>
@@ -111,3 +133,6 @@ export function CategoryStats({ stats, totalCount }: CategoryStatsProps) {
     </div>
   );
 }
+
+/** IA 문서 명칭(StatsChart)과 동일 컴포넌트 */
+export { CategoryStats as StatsChart };

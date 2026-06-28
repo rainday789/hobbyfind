@@ -55,7 +55,7 @@ export function HobbyCarousel() {
   if (slides.length === 0) {
     return (
       <div className="container mx-auto px-4 py-6">
-        <div className="h-48 md:h-72 rounded-2xl bg-sky-100 animate-pulse" />
+        <div className="h-48 md:h-72 rounded-2xl bg-neutral-light animate-pulse" />
       </div>
     );
   }
@@ -67,7 +67,7 @@ export function HobbyCarousel() {
       onMouseLeave={() => setPaused(false)}
       aria-label="오늘의 추천 취미 슬라이드"
     >
-      <div className="relative overflow-hidden rounded-2xl border border-sky-200 bg-sky-50 shadow-sm">
+      <div className="relative overflow-hidden rounded-2xl border border-border-gray bg-neutral-light shadow-card">
         <AnimatePresence mode="wait">
           <motion.div
             key={current.id}
@@ -76,7 +76,7 @@ export function HobbyCarousel() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.45 }}
           >
-            <div className="relative aspect-[16/7] md:aspect-[16/6] min-h-[200px] md:min-h-[280px] bg-sky-50">
+            <div className="relative aspect-[16/7] md:aspect-[16/6] min-h-[200px] md:min-h-[280px] bg-neutral-light">
               <Image
                 src={current.imageUrl}
                 alt={current.title}
@@ -91,7 +91,7 @@ export function HobbyCarousel() {
                   <button
                     type="button"
                     onClick={() => goTo(index - 1)}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-sky-200 text-ink hover:bg-sky-50 flex items-center justify-center shadow-sm"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-border-gray text-ink hover:bg-neutral-light flex items-center justify-center shadow-sm"
                     aria-label="이전 슬라이드"
                   >
                     <ChevronLeft className="w-5 h-5" />
@@ -99,7 +99,7 @@ export function HobbyCarousel() {
                   <button
                     type="button"
                     onClick={() => goTo(index + 1)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-sky-200 text-ink hover:bg-sky-50 flex items-center justify-center shadow-sm"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white border border-border-gray text-ink hover:bg-neutral-light flex items-center justify-center shadow-sm"
                     aria-label="다음 슬라이드"
                   >
                     <ChevronRight className="w-5 h-5" />
@@ -109,7 +109,7 @@ export function HobbyCarousel() {
             </div>
 
             <div className="carousel-caption">
-              <p className="text-xs font-bold text-sky-700 uppercase tracking-wide mb-3">
+              <p className="text-xs font-bold text-brand-primary uppercase tracking-wide mb-3">
                 오늘의 PICK
               </p>
               <span
@@ -130,7 +130,7 @@ export function HobbyCarousel() {
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <Link
                   href={`/hobby/${current.id}`}
-                  className="inline-flex items-center gap-1 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 px-4 py-2 rounded-lg transition-colors"
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-white bg-brand-primary hover:bg-[#E31C5F] px-4 py-2 rounded-lg transition-colors"
                 >
                   {current.copy.cta}
                   <ChevronRight className="w-4 h-4" />
@@ -146,7 +146,7 @@ export function HobbyCarousel() {
                         aria-label={`${i + 1}번째 슬라이드`}
                         className={cn(
                           'h-1.5 rounded-full transition-all',
-                          i === index ? 'w-6 bg-sky-600' : 'w-1.5 bg-sky-200 hover:bg-sky-400'
+                          i === index ? 'w-6 bg-brand-primary' : 'w-1.5 bg-border-gray hover:bg-brand-primary/60'
                         )}
                       />
                     ))}

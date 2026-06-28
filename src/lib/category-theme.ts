@@ -1,6 +1,6 @@
 export type HobbyCategory = 'sports' | 'intelligence' | 'art';
 
-/** Sky + Amber + Indigo — 하늘색 UI에서 흔한 보조색 3분할 */
+/** design.md §1.4 — 카테고리 보조 색상 */
 export const categoryThemes: Record<
   HobbyCategory,
   { label: string; emoji: string; chip: string; badge: string; gradient: string; ring: string }
@@ -8,26 +8,26 @@ export const categoryThemes: Record<
   sports: {
     label: '운동형',
     emoji: '🏃',
-    chip: 'bg-amber-100 text-amber-800 border-amber-200',
-    badge: 'bg-amber-500 text-white',
-    gradient: 'bg-amber-500',
-    ring: '#F59E0B',
+    chip: 'bg-rose-50 text-rose-700 border-rose-100',
+    badge: 'bg-rose-700 text-white',
+    gradient: 'bg-rose-700',
+    ring: '#BE123C',
   },
   intelligence: {
     label: '지능형',
     emoji: '🧩',
-    chip: 'bg-sky-100 text-sky-800 border-sky-200',
-    badge: 'bg-sky-600 text-white',
-    gradient: 'bg-sky-600',
-    ring: '#0284C7',
+    chip: 'bg-teal-50 text-teal-700 border-teal-100',
+    badge: 'bg-brand-teal text-white',
+    gradient: 'bg-brand-teal',
+    ring: '#008489',
   },
   art: {
     label: '예술형',
     emoji: '🎨',
-    chip: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-    badge: 'bg-indigo-500 text-white',
-    gradient: 'bg-indigo-500',
-    ring: '#6366F1',
+    chip: 'bg-amber-50 text-amber-800 border-amber-100',
+    badge: 'bg-amber-700 text-white',
+    gradient: 'bg-amber-700',
+    ring: '#B45309',
   },
 };
 

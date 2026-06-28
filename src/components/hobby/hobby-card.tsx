@@ -2,12 +2,14 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Bookmark, Heart } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { getCategoryTheme } from '@/lib/category-theme';
+import { redirectGuestToLogin } from '@/lib/bookmark-auth';
 import { cn } from '@/lib/utils';
 
 interface HobbyCardProps {
@@ -34,6 +36,8 @@ export function HobbyCard({
   onBookmarkToggle,
 }: HobbyCardProps) {
   const { data: session } = useSession();
+  const router = useRouter();
+  const pathname = usePathname();
   const { toast } = useToast();
   const [bookmarked, setBookmarked] = useState(isBookmarked);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,11 +65,7 @@ export function HobbyCard({
     e.stopPropagation();
 
     if (!session) {
-      toast({
-        title: '로그인이 필요해요',
-        description: '북마크는 로그인 후 이용할 수 있어요.',
-        variant: 'destructive',
-      });
+      redirectGuestToLogin(router, pathname || `/hobby/${id}`);
       return;
     }
 
@@ -111,7 +111,7 @@ export function HobbyCard({
           'group relative overflow-hidden bg-white transition-all duration-300',
           isPoster
             ? 'rounded-xl shadow-sm hover:shadow-md'
-            : 'rounded-2xl border border-sky-200 shadow-sm hover:shadow-md'
+            : 'rounded-2xl border border-border-gray shadow-card hover:shadow-card-hover'
         )}
       >
         <div
@@ -137,29 +137,27 @@ export function HobbyCard({
             {theme?.label}
           </span>
 
-          {session && (
-            <button
-              type="button"
-              onClick={handleBookmarkClick}
-              disabled={isLoading}
-              aria-label={bookmarked ? '북마크 해제' : '북마크 추가'}
-              className={cn(
-                'absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm border border-sky-200 z-10',
-                bookmarked
-                  ? 'bg-amber-500 text-white'
-                  : 'bg-white text-ink hover:bg-sky-50'
-              )}
-            >
-              {bookmarked ? (
-                <Heart className="w-3.5 h-3.5 fill-current" />
-              ) : (
-                <Bookmark className="w-3.5 h-3.5" />
-              )}
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={handleBookmarkClick}
+            disabled={isLoading}
+            aria-label={bookmarked ? '북마크 해제' : '북마크 추가'}
+            className={cn(
+              'absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm border border-border-gray z-10',
+              bookmarked
+                ? 'bg-brand-primary text-white border-brand-primary'
+                : 'bg-white text-ink-muted hover:text-brand-primary hover:bg-neutral-light'
+            )}
+          >
+            {bookmarked ? (
+              <Heart className="w-3.5 h-3.5 fill-current" />
+            ) : (
+              <Bookmark className="w-3.5 h-3.5" />
+            )}
+          </button>
         </div>
 
-        <div className={cn('border-t border-sky-200', isPoster ? 'px-2.5 py-2.5' : 'px-3 py-3')}>
+        <div className={cn('border-t border-border-gray', isPoster ? 'px-2.5 py-2.5' : 'px-3 py-3')}>
           <h3
             className={cn(
               'font-bold text-ink line-clamp-1 mb-0.5',
